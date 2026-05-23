@@ -1,0 +1,309 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap');
+
+/* ─── Frieren Palette ─── */
+:root {
+  --sage: #7a9e8a;
+  --sage-light: #a8c4b0;
+  --sage-pale: #ddeade;
+  --mist: #b8c9b4;
+  --stone: #8a8070;
+  --stone-light: #b0a898;
+  --parchment: #f5f0e8;
+  --parchment-dark: #e8e0d0;
+  --ink: #2a2420;
+  --ink-soft: #3d3530;
+  --ink-muted: #6a6058;
+  --gold: #c4a44a;
+  --gold-pale: #e8d898;
+  --silver: #9ca8b0;
+  --silver-pale: #d0d8dc;
+  --rose: #8a5a6a;
+  --rose-pale: #d4b0bc;
+  --frost: #7090a0;
+  --frost-pale: #b8ccd4;
+  --deep-forest: #3a4a3a;
+  --deep-forest-light: #506050;
+
+  --font-display: 'Cinzel', serif;
+  --font-body: 'Crimson Pro', serif;
+  --font-italic: 'IM Fell English', serif;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  --shadow-soft: 0 2px 16px rgba(42, 36, 32, 0.08);
+  --shadow-card: 0 4px 24px rgba(42, 36, 32, 0.10);
+  --shadow-hover: 0 8px 32px rgba(42, 36, 32, 0.14);
+
+  --transition: 0.22s ease;
+}
+
+/* ─── Dark Mode ─── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --parchment: #1c1a17;
+    --parchment-dark: #242018;
+    --ink: #e8e0d0;
+    --ink-soft: #d0c8b8;
+    --ink-muted: #a09080;
+    --stone: #78706a;
+    --stone-light: #60584e;
+  }
+}
+
+/* ─── Base ─── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--parchment);
+  color: var(--ink);
+  font-size: 16px;
+  line-height: 1.7;
+  min-height: 100vh;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--stone-light);
+  border-radius: 99px;
+}
+
+/* ─── Typography ─── */
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+h1 { font-size: 2.2rem; }
+h2 { font-size: 1.6rem; }
+h3 { font-size: 1.2rem; }
+h4 { font-size: 1rem; }
+
+p {
+  font-family: var(--font-body);
+  color: var(--ink-soft);
+}
+
+em, i {
+  font-family: var(--font-italic);
+}
+
+/* ─── Utility Classes ─── */
+.text-muted { color: var(--ink-muted); }
+.text-gold { color: var(--gold); }
+.text-sage { color: var(--sage); }
+.text-silver { color: var(--silver); }
+.text-rose { color: var(--rose); }
+
+.font-display { font-family: var(--font-display); }
+.font-body { font-family: var(--font-body); }
+.font-italic { font-family: var(--font-italic); font-style: italic; }
+
+.section-label {
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+/* ─── Badge / Tag ─── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  padding: 3px 10px;
+  border-radius: 99px;
+  border: 0.5px solid;
+}
+
+.badge-support { color: var(--silver); border-color: rgba(156,168,176,0.4); background: rgba(156,168,176,0.1); }
+.badge-fighter { color: var(--gold); border-color: rgba(196,164,74,0.4); background: rgba(196,164,74,0.1); }
+.badge-archer  { color: var(--sage);  border-color: rgba(122,158,138,0.4); background: rgba(122,158,138,0.1); }
+.badge-tanker  { color: var(--rose);  border-color: rgba(138,90,106,0.4); background: rgba(138,90,106,0.1); }
+.badge-gacha   { color: var(--gold);  border-color: rgba(196,164,74,0.5); background: rgba(196,164,74,0.08); }
+
+/* ─── Card ─── */
+.card {
+  background: var(--parchment);
+  border: 0.5px solid var(--parchment-dark);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  box-shadow: var(--shadow-soft);
+  transition: box-shadow var(--transition), border-color var(--transition);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-hover);
+  border-color: var(--stone-light);
+}
+
+/* ─── Divider ─── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 1.5rem 0;
+}
+
+.divider-line {
+  flex: 1;
+  height: 0.5px;
+  background: var(--parchment-dark);
+}
+
+.divider-rune {
+  font-size: 14px;
+  color: var(--stone-light);
+  opacity: 0.7;
+}
+
+/* ─── Tip list ─── */
+.tip-list { list-style: none; }
+.tip-list li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+  line-height: 1.6;
+}
+
+.tip-list li::before {
+  content: "◆";
+  font-size: 0.45rem;
+  color: var(--stone-light);
+  margin-top: 7px;
+  flex-shrink: 0;
+}
+
+/* ─── Warning box ─── */
+.warning-box {
+  border: 0.5px solid rgba(196,164,74,0.35);
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  background: rgba(196,164,74,0.06);
+  margin-top: 12px;
+  font-family: var(--font-italic);
+  font-size: 0.85rem;
+  color: var(--gold);
+  line-height: 1.5;
+}
+
+/* ─── Formation visual ─── */
+.formation-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  margin: 10px 0;
+}
+
+.formation-slot {
+  border: 0.5px solid var(--parchment-dark);
+  border-radius: var(--radius-md);
+  padding: 8px 4px;
+  text-align: center;
+  background: rgba(var(--parchment-dark), 0.4);
+}
+
+.formation-slot .slot-order {
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  color: var(--ink-muted);
+  letter-spacing: 0.1em;
+}
+
+.formation-slot .slot-name {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 3px 0 1px;
+}
+
+.formation-slot .slot-role {
+  font-family: var(--font-italic);
+  font-size: 0.7rem;
+  color: var(--ink-muted);
+}
+
+.formation-slot .slot-delay {
+  font-family: var(--font-display);
+  font-size: 0.58rem;
+  color: var(--stone-light);
+  margin-top: 4px;
+  letter-spacing: 0.05em;
+}
+
+/* ─── Priority grid ─── */
+.priority-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.priority-card {
+  border: 0.5px solid var(--parchment-dark);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  background: rgba(42, 36, 32, 0.03);
+}
+
+.priority-card .priority-label {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
+}
+
+.priority-card .priority-content {
+  font-family: var(--font-italic);
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+}
+
+/* ─── Animations ─── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease forwards;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 640px) {
+  h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.3rem; }
+  .formation-grid { grid-template-columns: repeat(5, 1fr); gap: 4px; }
+  .formation-slot .slot-name { font-size: 0.65rem; }
+}

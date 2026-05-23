@@ -1,0 +1,195 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Frieren Palette */
+  --sage: #7a9e8a;
+  --sage-light: #a8c4b0;
+  --sage-pale: #ddeade;
+  --gold: #c4a44a;
+  --gold-pale: #e8d898;
+  --silver: #9ca8b0;
+  --rose: #8a5a6a;
+  --frost: #7090a0;
+  --stone: #8a8070;
+  --stone-light: #b0a898;
+  --parchment: #f5f0e8;
+  --parchment-dark: #e8e0d0;
+  --ink: #2a2420;
+  --ink-soft: #3d3530;
+  --ink-muted: #6a6058;
+  --deep-forest: #3a4a3a;
+
+  --background: #f5f0e8;
+  --foreground: #2a2420;
+  --card: #f5f0e8;
+  --card-foreground: #2a2420;
+  --popover: #f5f0e8;
+  --popover-foreground: #2a2420;
+  --primary: #7a9e8a;
+  --primary-foreground: #f5f0e8;
+  --secondary: #e8e0d0;
+  --secondary-foreground: #2a2420;
+  --muted: #e8e0d0;
+  --muted-foreground: #6a6058;
+  --accent: #c4a44a;
+  --accent-foreground: #2a2420;
+  --destructive: #8a5a6a;
+  --destructive-foreground: #f5f0e8;
+  --border: #e8e0d0;
+  --input: #e8e0d0;
+  --ring: #7a9e8a;
+  --radius: 0.5rem;
+}
+
+
+
+@theme inline {
+  --font-sans: 'Crimson Pro', serif;
+  --font-serif: 'Cinzel', serif;
+  --font-display: 'Cinzel', serif;
+  --font-flavor: 'IM Fell English', serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  
+  /* Frieren custom colors */
+  --color-sage: var(--sage);
+  --color-sage-light: var(--sage-light);
+  --color-sage-pale: var(--sage-pale);
+  --color-gold: var(--gold);
+  --color-gold-pale: var(--gold-pale);
+  --color-silver: var(--silver);
+  --color-rose: var(--rose);
+  --color-frost: var(--frost);
+  --color-stone: var(--stone);
+  --color-stone-light: var(--stone-light);
+  --color-parchment: var(--parchment);
+  --color-parchment-dark: var(--parchment-dark);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-muted: var(--ink-muted);
+  --color-deep-forest: var(--deep-forest);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Frieren Anime Background */
+.frieren-bg {
+  position: relative;
+  min-height: 100vh;
+}
+
+.frieren-bg::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url('/images/frieren-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: -2;
+}
+
+.frieren-bg::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(245, 240, 232, 0.75) 0%,
+    rgba(245, 240, 232, 0.85) 30%,
+    rgba(245, 240, 232, 0.9) 100%
+  );
+  z-index: -1;
+}
+
+/* Floating magical particles animation */
+@keyframes float-particle {
+  0%, 100% { 
+    transform: translateY(0) scale(1);
+    opacity: 0.4;
+  }
+  50% { 
+    transform: translateY(-15px) scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+/* Magical floating particles */
+.magic-particle {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+  box-shadow: 0 0 6px var(--gold), 0 0 12px rgba(196, 164, 74, 0.5);
+  animation: float-particle 5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.magic-particle:nth-child(2) {
+  animation-delay: 1.5s;
+  width: 3px;
+  height: 3px;
+}
+
+.magic-particle:nth-child(3) {
+  animation-delay: 3s;
+  width: 5px;
+  height: 5px;
+}
+
+.magic-particle-sage {
+  background: radial-gradient(circle, var(--sage-light) 0%, transparent 70%);
+  box-shadow: 0 0 6px var(--sage-light), 0 0 12px rgba(122, 158, 138, 0.5);
+}
+
+/* Card hover glow effect */
+.frieren-card {
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  background: rgba(245, 240, 232, 0.85);
+  backdrop-filter: blur(8px);
+}
+
+.frieren-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 0 25px rgba(196, 164, 74, 0.15),
+    0 8px 20px rgba(42, 36, 32, 0.1);
+}
