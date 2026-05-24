@@ -23,13 +23,13 @@ const POSITION_LABEL: Record<string, string> = {
 
 export function HeroCard({ hero, expanded = false, owned, isBase, onAdd, onRemove }: HeroCardProps) {
   const isOwned = owned !== undefined ? owned : hero.rarity === "owned";
-  const showAction = !isBase && (onAdd || onRemove);
+  const showAction = !!(onAdd || onRemove);
 
   if (expanded) {
     return (
       <div className={`
         h-full flex flex-col rounded-xl overflow-hidden border transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5
-        ${isOwned ? "border-sage/40" : "border-gold/30"}
+        ${isOwned ? "border-sage/40 hero-owned-glow" : "border-gold/30"}
       `}>
         {/* ── Header bar ── */}
         <div className={`px-3 py-1.5 flex items-center justify-between flex-shrink-0 ${isOwned ? "bg-sage/15" : "bg-gold/10"}`}>
@@ -108,18 +108,28 @@ export function HeroCard({ hero, expanded = false, owned, isBase, onAdd, onRemov
 
         {/* ── Footer stats ── */}
         {hero.stats && (
-          <div className={`flex-shrink-0 border-t px-3 py-1.5 grid grid-cols-4 gap-1 ${isOwned ? "border-sage/20 bg-sage/5" : "border-gold/20 bg-gold/5"}`}>
+          <div className={`flex-shrink-0 border-t px-3 py-2 space-y-1.5 ${isOwned ? "border-sage/20 bg-sage/5" : "border-gold/20 bg-gold/5"}`}>
             {[
-              { label: "ATK", value: hero.stats.atk.toLocaleString() },
-              { label: "DEF", value: hero.stats.def.toLocaleString() },
-              { label: "HP",  value: hero.stats.hp.toLocaleString() },
-              { label: "PWR", value: hero.stats.power.toLocaleString() },
-            ].map(({ label, value }) => (
-              <div key={label} className="text-center">
-                <p className="text-[8px] font-serif text-stone uppercase tracking-wider">{label}</p>
-                <p className="text-[10px] font-serif text-ink font-medium">{value}</p>
+              { label: "ATK", value: hero.stats.atk, max: 1500, color: "bg-rose/70" },
+              { label: "DEF", value: hero.stats.def, max: 1250, color: "bg-frost/70" },
+              { label: "HP",  value: hero.stats.hp,  max: 6000, color: "bg-sage/70"  },
+            ].map(({ label, value, max, color }) => (
+              <div key={label} className="flex items-center gap-2">
+                <span className="text-[8px] font-serif text-stone w-5 flex-shrink-0">{label}</span>
+                <div className="flex-1 h-1.5 bg-parchment-dark rounded-full overflow-hidden">
+                  <div
+                    className={`h-full ${color} rounded-full stat-bar-fill`}
+                    style={{ width: `${Math.min((value / max) * 100, 100)}%` }}
+                  />
+                </div>
+                <span className="text-[8px] font-serif text-ink-muted w-10 text-right tabular-nums">{value.toLocaleString()}</span>
               </div>
             ))}
+            <div className="flex justify-end pt-0.5">
+              <span className="text-[8px] font-serif text-stone bg-stone/10 border border-stone/20 rounded px-1.5 py-0.5">
+                ⚔ {hero.stats.power.toLocaleString()}
+              </span>
+            </div>
           </div>
         )}
       </div>

@@ -22,6 +22,17 @@ const TYPE_BORDER: Record<string, string> = {
 
 const SHOWCASE = [...heroes].sort((a, b) => a.priority - b.priority);
 
+const RUNE_POSITIONS = [
+  { top: "12%", left:  "6%",   delay: "0s",   duration: "9s"  },
+  { top: "28%", right: "10%",  delay: "2.5s", duration: "11s" },
+  { top: "52%", left:  "2%",   delay: "5s",   duration: "8s"  },
+  { top: "68%", right: "5%",   delay: "1s",   duration: "10s" },
+  { top: "18%", left:  "52%",  delay: "3.5s", duration: "12s" },
+  { top: "62%", left:  "38%",  delay: "7s",   duration: "9s"  },
+  { top: "82%", right: "18%",  delay: "4s",   duration: "11s" },
+  { top: "8%",  right: "28%",  delay: "6s",   duration: "8s"  },
+];
+
 export function HeroShowcase() {
   const [idx, setIdx]         = useState(0);
   const [visible, setVisible] = useState(true);
@@ -61,37 +72,50 @@ export function HeroShowcase() {
   return (
     <section className="relative min-h-screen overflow-hidden bg-ink">
 
+      {/* ── Rune particles ── */}
+      <div aria-hidden className="absolute inset-0 z-[2] pointer-events-none">
+        {RUNE_POSITIONS.map(({ top, left, right, delay, duration }, i) => (
+          <span
+            key={i}
+            className="absolute text-[9px] text-gold/25 select-none rune-float"
+            style={{ top, left, right, animationDelay: delay, animationDuration: duration }}
+          >✦</span>
+        ))}
+      </div>
+
       {/* ── Character art (fades on hero change) ── */}
       <div
         className="absolute inset-0 z-[1] transition-opacity duration-300"
         style={{ opacity: visible ? 1 : 0 }}
       >
-        {/* Mobile: full-bleed bg, heavy left gradient */}
+        {/* Mobile: full-bleed bg */}
         <div className="md:hidden absolute inset-0">
           <Image
-            src={`/images/heroes/banner/${hero.id}.jpg`}
+            src={`/images/${hero.id}.jpg`}
             alt={hero.name}
             fill
-            className="object-cover object-top"
+            className="object-cover object-[28%_top]"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/80 to-ink/25" />
-          <div className="absolute bottom-0 inset-x-0 h-48 bg-gradient-to-t from-parchment via-parchment/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-ink/95 via-ink/80 to-ink/30" />
+          <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-parchment via-parchment/50 to-transparent" />
         </div>
 
-        {/* Desktop: right 60% only, blends left into text panel */}
+        {/* Desktop: right 60% only */}
         <div className="hidden md:block absolute right-0 top-0 bottom-0 w-3/5">
           <Image
-            src={`/images/heroes/banner/${hero.id}.jpg`}
+            src={`/images/${hero.id}.jpg`}
             alt={hero.name}
             fill
-            className="object-cover object-top"
+            className="object-cover object-left-top"
             priority
           />
-          {/* left fade — blends into ink, also covers any panel remnant */}
+          {/* left fade — covers left nav panel */}
           <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/20 to-transparent" />
-          {/* bottom fade — covers stars overlay */}
-          <div className="absolute bottom-0 inset-x-0 h-64 bg-gradient-to-t from-parchment via-parchment/40 to-transparent" />
+          {/* right fade — covers stats panel */}
+          <div className="absolute inset-0 bg-gradient-to-l from-ink/70 via-ink/10 to-transparent" />
+          {/* bottom fade — covers stars overlay, kept short so feet visible */}
+          <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-parchment via-parchment/40 to-transparent" />
         </div>
       </div>
 
@@ -103,7 +127,7 @@ export function HeroShowcase() {
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-parchment/10 border border-gold/30 mb-10">
             <Star className="w-3 h-3 text-gold" />
             <span className="text-[10px] font-serif text-parchment/70 tracking-[0.25em] uppercase">
-              F2P Strategy Guide
+              Rellion · Adventurer's Codex
             </span>
           </div>
 
@@ -112,20 +136,37 @@ export function HeroShowcase() {
             className="transition-all duration-200"
             style={{ opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(6px)" }}
           >
-            <p className={`text-[10px] uppercase tracking-[0.3em] font-serif mb-2 ${textColor}`}>
-              {hero.type}
-            </p>
+            <div className="flex items-center gap-2 mb-2">
+              <span className={`text-[8px] ${textColor}`}>◆</span>
+              <p className={`text-[10px] uppercase tracking-[0.3em] font-serif ${textColor}`}>
+                {hero.type}
+              </p>
+            </div>
 
-            <h2 className="font-serif text-5xl md:text-6xl lg:text-7xl text-parchment mb-2 leading-none tracking-wide">
+            <h2 className="font-[var(--font-cinzel-decorative)] text-5xl md:text-6xl lg:text-7xl text-parchment mb-2 leading-none tracking-wide">
               {hero.name}
             </h2>
 
-            <p className="text-base text-parchment/45 italic font-[var(--font-fell)] mb-5">
+            <div className="flex items-center gap-3 my-3">
+              <div className="h-px flex-1 bg-parchment/15" />
+              <span className="text-gold/50 text-[10px]">✦</span>
+              <div className="h-px flex-1 bg-parchment/15" />
+            </div>
+
+            <p className="text-base text-parchment/45 italic font-[var(--font-fell)] mb-4">
               {hero.title}
             </p>
 
-            <div className={`inline-flex items-center px-3 py-1 rounded-full border ${ringColor} bg-parchment/5 mb-6`}>
-              <span className="text-xs font-serif text-parchment/65 tracking-wider">{hero.role}</span>
+            <div className="flex flex-wrap items-center gap-2 mb-5">
+              <div className={`inline-flex items-center px-3 py-1 rounded-full border ${ringColor} bg-parchment/5`}>
+                <span className="text-xs font-serif text-parchment/65 tracking-wider">{hero.role}</span>
+              </div>
+              {hero.stats && (
+                <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gold/10 border border-gold/25">
+                  <span className="text-[9px] font-serif text-gold/60 uppercase tracking-wider">PWR</span>
+                  <span className="font-[var(--font-orbitron)] text-[11px] text-gold/85">{hero.stats.power.toLocaleString()}</span>
+                </div>
+              )}
             </div>
 
             <p className="text-sm text-parchment/40 font-[var(--font-fell)] italic leading-relaxed max-w-xs">
@@ -173,13 +214,13 @@ export function HeroShowcase() {
               href="/roster"
               className="inline-flex items-center gap-2 px-7 py-3 bg-gold hover:bg-gold/90 text-ink font-serif rounded-md transition-colors tracking-wide text-sm"
             >
-              Explore Heroes <ChevronRight className="w-4 h-4" />
+              Browse the Roster <ChevronRight className="w-4 h-4" />
             </Link>
             <a
               href="#roadmap"
               className="inline-flex items-center gap-2 px-5 py-3 border border-parchment/25 text-parchment/55 hover:text-parchment/90 hover:border-parchment/40 font-serif rounded-md transition-colors text-sm"
             >
-              View Roadmap
+              Read the Chronicles
             </a>
           </div>
         </div>

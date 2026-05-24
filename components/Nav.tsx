@@ -17,12 +17,17 @@ export function Nav() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="border-b border-parchment-dark bg-parchment/90 backdrop-blur-sm sticky top-0 z-50">
+    <header className="border-b border-gold/20 bg-ink/85 backdrop-blur-md sticky top-0 z-50">
       <div className="max-w-2xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2" onClick={() => setOpen(false)}>
-          <Scroll className="w-4 h-4 text-sage" />
-          <span className="font-serif text-ink text-sm tracking-wider">RELLION</span>
+          <Scroll className="w-4 h-4 text-gold/70" />
+          <span
+            className="font-serif text-gold text-sm tracking-wider"
+            style={{ textShadow: '0 0 10px rgba(196,164,74,0.35)' }}
+          >
+            RELLION
+          </span>
         </Link>
 
         {/* Desktop nav */}
@@ -34,8 +39,8 @@ export function Nav() {
               className={`
                 font-serif text-xs tracking-widest uppercase px-3 py-1 border-b-2 transition-colors
                 ${pathname === href
-                  ? "border-sage text-sage"
-                  : "border-transparent text-ink-muted hover:text-ink"}
+                  ? "border-gold text-gold"
+                  : "border-transparent text-parchment/50 hover:text-parchment/90"}
               `}
             >
               {label}
@@ -46,7 +51,7 @@ export function Nav() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setOpen(!open)}
-          className="md:hidden p-1 text-ink-muted hover:text-ink transition-colors"
+          className="md:hidden p-1 text-parchment/50 hover:text-parchment transition-colors"
           aria-label="Menu"
         >
           {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -55,7 +60,7 @@ export function Nav() {
 
       {/* Mobile dropdown */}
       {open && (
-        <div className="md:hidden border-t border-parchment-dark bg-parchment/95 backdrop-blur-sm">
+        <div className="md:hidden border-t border-gold/20 bg-ink/90 backdrop-blur-md">
           <nav className="max-w-2xl mx-auto px-4 py-2 flex flex-col">
             {NAV_LINKS.map(({ href, label }) => (
               <Link
@@ -63,8 +68,8 @@ export function Nav() {
                 href={href}
                 onClick={() => setOpen(false)}
                 className={`
-                  font-serif text-sm tracking-widest uppercase py-3 border-b border-parchment-dark last:border-0 transition-colors
-                  ${pathname === href ? "text-sage" : "text-ink-muted"}
+                  font-serif text-sm tracking-widest uppercase py-3 border-b border-gold/15 last:border-0 transition-colors
+                  ${pathname === href ? "text-gold" : "text-parchment/50 hover:text-parchment/80"}
                 `}
               >
                 {label}

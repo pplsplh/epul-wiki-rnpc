@@ -12,9 +12,16 @@ const FILTERS = ["All", "Owned", "Gacha", "Support", "Fighter", "Archer", "Tanke
 type Filter = typeof FILTERS[number];
 
 export function HeroRoster() {
-  const [filter, setFilter] = useState<Filter>("All");
-  const [search, setSearch] = useState("");
+  const [filter, setFilter]   = useState<Filter>("All");
+  const [search, setSearch]   = useState("");
+  const [justAdded, setJustAdded] = useState<string | null>(null);
   const { isOwned, addOwned, removeOwned } = useOwnedHeroes();
+
+  function handleAdd(heroId: string) {
+    addOwned(heroId);
+    setJustAdded(heroId);
+    setTimeout(() => setJustAdded(null), 1200);
+  }
 
   const filtered = heroes.filter((h) => {
     const matchSearch = h.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -78,18 +85,29 @@ export function HeroRoster() {
           const gachaList  = filtered.filter((h) => !isOwned(h.id));
           const showBoth   = ownedList.length > 0 && gachaList.length > 0;
 
-          function renderCard(hero: typeof filtered[0]) {
-            const owned  = isOwned(hero.id);
-            const isBase = BASE_OWNED.has(hero.id);
+          function renderCard(hero: typeof filtered[0], index: number) {
+            const owned   = isOwned(hero.id);
+            const isBase  = BASE_OWNED.has(hero.id);
             return (
-              <div key={hero.id} className="group flex flex-col h-full">
+              <div
+                key={hero.id}
+                className="group flex flex-col h-full relative animate-fade-up"
+                style={{ animationDelay: `${index * 50}ms` }}
+              >
+                {justAdded === hero.id && (
+                  <div className="obtained-flash absolute inset-0 z-20 flex items-center justify-center pointer-events-none rounded-xl">
+                    <span className="font-serif text-sm text-sage bg-parchment/95 border border-sage/50 px-4 py-2 rounded-lg shadow-lg">
+                      ✦ Dimiliki!
+                    </span>
+                  </div>
+                )}
                 <Link href={`/hero/${hero.id}`} className="block flex-1 min-h-0">
                   <HeroCard
                     hero={hero}
                     expanded
                     owned={owned}
                     isBase={isBase}
-                    onAdd={() => addOwned(hero.id)}
+                    onAdd={() => handleAdd(hero.id)}
                   />
                 </Link>
                 <button
@@ -107,7 +125,7 @@ export function HeroRoster() {
           return (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 items-stretch">
-                {ownedList.map(renderCard)}
+                {ownedList.map((hero, i) => renderCard(hero, i))}
               </div>
 
               {showBoth && (
@@ -119,7 +137,7 @@ export function HeroRoster() {
               )}
 
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 items-stretch">
-                {gachaList.map(renderCard)}
+                {gachaList.map((hero, i) => renderCard(hero, ownedList.length + i))}
               </div>
             </>
           );

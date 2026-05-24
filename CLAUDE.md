@@ -132,10 +132,10 @@ interface SynergyRule {
 - Jangan skip dupe hero core (Sera, Ignis)
 
 ## Fitur Ownership (localStorage)
-- `BASE_OWNED` = hero dengan `rarity: "owned"` di data — tidak bisa di-remove via UI
-- Hero gacha bisa ditambah ke koleksi via tombol "+ Dimiliki" di dalam kartu
-- Storage key: `rellion_owned_heroes`
-- Tier list custom juga tersimpan di localStorage: `rellion_tierlist`
+- Semua hero sekarang `rarity: "gacha"` — `BASE_OWNED` efektif kosong
+- Hero bisa ditambah ke koleksi via tombol "+ Dimiliki", dan di-remove via "Hapus dari koleksi"
+- Storage key owned: `rellion_owned_heroes` | removed: `rellion_removed_heroes`
+- Tier list custom tersimpan di localStorage: `rellion_tierlist`
 
 ## Identitas Visual — Frieren Aesthetic
 
@@ -155,9 +155,53 @@ deep-forest: #3a4a3a
 
 ### Tone
 - Parchment, muted sage, gold — seperti manuskrip kuno
-- Bukan dark fantasy, bukan neon — elegant, melancholic, timeless
+- **Design direction:** dark fantasy medieval manuscript meets JRPG HUD
+- Referensi visual: Genshin Impact (element UI), Final Fantasy XIV (quest journal), Elden Ring (tarnished gold + worn parchment)
+- Bukan neon/cyberpunk — elegant, melancholic, timeless
 - Animasi subtle, tidak ada flash/glow berlebihan
 - **Mobile-first** — breakpoint `md:` untuk desktop enhancement
+
+## UI Patterns — Fantasy RPG HUD
+
+Pola-pola UI yang sudah diimplementasi dan harus konsisten di semua halaman:
+
+### Ornamen & Dekorasi
+- **◆ Diamond prefix** — sebelum label tipe hero di HeroShowcase
+- **✦ Ornamental separator** — garis tipis + ✦ di tengah, antara nama hero dan subtitle
+- **✦ ─── ✦ line divider** — section separator di area CTA dan penting
+- **`— Label —` sub-header** — teks kecil uppercase tracking lebar di atas judul section
+
+### Card Pattern
+- **Gold top accent line** — `h-px bg-gradient-to-r from-transparent via-gold/35 to-transparent` di atas card
+- **Roman numeral badge** — pojok kanan atas card fitur (I, II, III, IV), font-serif muted
+- **Gold underline pendek** — `h-px bg-gradient-to-r from-gold/25 to-transparent` antara judul dan deskripsi card
+
+### Stat Display
+- **PWR badge** — `bg-gold/10 border border-gold/25`, label "PWR" + angka power hero (di HeroShowcase)
+- **Stat bars** — ATK/DEF/HP progress bar dengan `stat-bar-fill` animation (scaleX dari kiri)
+
+### Animasi CSS (sudah ada di globals.css)
+| Class | Efek |
+|-------|------|
+| `stat-bar-fill` | Stat bar grows from left (0.7s ease-out) |
+| `hero-owned-glow` | Subtle pulse glow pada card hero yang dimiliki |
+| `obtained-flash` | Flash overlay "Obtained!" saat hero ditambah koleksi |
+| `animate-fade-up` | Fade in + slide up — support `animation-delay` untuk stagger |
+| `map-path-appear` | Marching ants pada SVG path di WorldMap |
+| `map-loc-pulse` | Idle pulse pada location marker WorldMap |
+| `map-loc-pulse-active` | Active pulse saat marker diklik |
+
+### SVG WorldMap (`components/WorldMap.tsx`)
+- 4 location markers (phase-1 s/d phase-4), dihubungkan bezier path
+- Parchment gradient background, faint grid, terrain (trees + mountains), compass rose
+- Klik marker → tampilkan PhaseBlock detail di bawah peta
+
+### Komponen yang Memakai Pattern
+- `HeroShowcase.tsx` — ◆ prefix, ✦ separator, PWR badge
+- `app/page.tsx` — gold accent card, roman numeral, ✦ ─── ✦ CTA divider
+- `PhaseBlock.tsx` — quest log style (EXP badge, section type label, ✦ checkbox)
+- `WorldMap.tsx` — SVG parchment map
+- `HeroCard.tsx` — stat bars, owned glow
 
 ## Konvensi
 - Bahasa: Indonesia, panggil "Epul" atau "bro"
@@ -165,6 +209,7 @@ deep-forest: #3a4a3a
 - Komponen modular, satu file satu komponen
 - Tailwind utility classes, warna via config — tidak hardcode hex di JSX
 - Data dipisah di `data/` — update data tidak perlu ubah komponen
+- Setiap selesai eksekusi, Recap dahulu menggunakan bahasa dan analogi sederhana yang mudah dipahami dan dimengerti
 
 ## Hindari
 - Tambah dependency tanpa diskusi

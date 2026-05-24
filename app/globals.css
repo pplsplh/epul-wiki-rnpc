@@ -189,7 +189,105 @@
 
 .frieren-card:hover {
   transform: translateY(-2px);
-  box-shadow: 
+  box-shadow:
     0 0 25px rgba(196, 164, 74, 0.15),
     0 8px 20px rgba(42, 36, 32, 0.1);
 }
+
+/* Owned hero card pulse glow */
+@keyframes owned-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(122, 158, 138, 0); }
+  50%       { box-shadow: 0 0 10px 2px rgba(122, 158, 138, 0.22), 0 0 3px 1px rgba(122, 158, 138, 0.3); }
+}
+.hero-owned-glow {
+  animation: owned-pulse 4s ease-in-out infinite;
+}
+
+/* Stat bar fill — scaleX from 0→1, width already set via inline style */
+@keyframes stat-fill {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+.stat-bar-fill {
+  animation: stat-fill 0.7s ease-out forwards;
+  transform-origin: left;
+}
+
+/* "Obtained!" flash overlay */
+@keyframes obtained-flash {
+  0%   { opacity: 0; transform: scale(0.85); }
+  20%  { opacity: 1; transform: scale(1.04); }
+  70%  { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.06); }
+}
+.obtained-flash {
+  animation: obtained-flash 1.2s ease-out forwards;
+}
+
+/* Card scroll-in */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-up {
+  animation: fade-up 0.45s ease-out forwards;
+  opacity: 0;
+}
+
+/* World Map — marching ants path */
+@keyframes march-ants {
+  from { stroke-dashoffset: 0; }
+  to   { stroke-dashoffset: -26; }
+}
+.map-path-march {
+  stroke-dasharray: 8 5;
+  animation: march-ants 1.5s linear infinite;
+}
+
+/* World Map — path fade in */
+@keyframes map-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.map-path-appear {
+  animation: march-ants 1.5s linear infinite, map-fade-in 1.2s ease-out both;
+}
+
+/* World Map — location pulse */
+@keyframes map-loc-idle {
+  0%, 100% { transform: scale(1);   opacity: 0.08; }
+  50%       { transform: scale(1.4); opacity: 0.04; }
+}
+.map-loc-pulse {
+  animation: map-loc-idle 3.5s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+@keyframes map-loc-active {
+  0%, 100% { transform: scale(1);   opacity: 0.22; }
+  50%       { transform: scale(1.5); opacity: 0.10; }
+}
+.map-loc-pulse-active {
+  animation: map-loc-active 2s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+/* Rune particles — floating ✦ inside hero banner */
+@keyframes rune-float {
+  0%   { transform: translateY(0) rotate(0deg);    opacity: 0;    }
+  15%  { opacity: 0.3; }
+  85%  { opacity: 0.15; }
+  100% { transform: translateY(-55px) rotate(18deg); opacity: 0; }
+}
+.rune-float {
+  animation: rune-float 9s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--ink); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-pale); }

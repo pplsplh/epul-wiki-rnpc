@@ -1,14 +1,30 @@
 import Link from "next/link";
-import { RoadmapAccordion } from "@/components/RoadmapAccordion";
+import { RoadmapSection } from "@/components/RoadmapSection";
 import { Divider } from "@/components/Divider";
 import { HeroShowcase } from "@/components/HeroShowcase";
-import { Sparkles, ChevronRight, Map, Users, Swords } from "lucide-react";
+import { Sparkles, ChevronRight, Map, Users, Swords, BookOpen } from "lucide-react";
 
 const FEATURES = [
-  { icon: Map,      title: "Interactive Roadmap", desc: "Panduan dari early game sampai end game dengan formasi optimal." },
-  { icon: Users,    title: "Hero Database",        desc: "Info lengkap skill dan priority untuk semua hero owned & gacha." },
-  { icon: Swords,   title: "Formation Guide",      desc: "Deploy timing dan combo synergy untuk maximum damage output." },
-  { icon: Sparkles, title: "F2P Friendly",         desc: "Strategi optimal tanpa perlu whale. Maximize resource efficiency." },
+  {
+    icon: Map,
+    title: "Interactive Roadmap",
+    desc: "From wanderer to champion — a path laid in ancient ink.",
+  },
+  {
+    icon: Users,
+    title: "Hero Compendium",
+    desc: "Every soul has a story. Study them before battle.",
+  },
+  {
+    icon: Swords,
+    title: "Formation Guide",
+    desc: "The difference between victory and ruin is one deployment order.",
+  },
+  {
+    icon: BookOpen,
+    title: "Synergy Atlas",
+    desc: "Even without gold, the clever adventurer prospers.",
+  },
 ];
 
 export default function Home() {
@@ -20,22 +36,38 @@ export default function Home() {
       <section className="py-20 px-4 bg-parchment">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="font-serif text-3xl md:text-4xl text-ink mb-4">Your Journey Awaits</h2>
-            <p className="text-ink-muted max-w-2xl mx-auto">
-              Everything you need to master Rellion: NPC Survival dari dasar sampai jadi pro player.
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="h-px w-12 bg-stone/40" />
+              <p className="text-xs font-serif text-stone uppercase tracking-[0.3em]">
+                ✦ Adventurer's Codex ✦
+              </p>
+              <div className="h-px w-12 bg-stone/40" />
+            </div>
+            <h2 className="font-serif text-3xl md:text-4xl text-ink mb-4">
+              What Awaits the Wanderer
+            </h2>
+            <p className="text-ink-muted italic font-[var(--font-fell)] max-w-2xl mx-auto">
+              Ancient knowledge, forged into scrolls — everything you need to survive and conquer Rellion.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {FEATURES.map(({ icon: Icon, title, desc }) => (
+            {FEATURES.map(({ icon: Icon, title, desc }, i) => (
               <div
                 key={title}
-                className="p-6 rounded-xl border border-parchment-dark hover:border-gold/50 transition-all duration-300 hover:shadow-lg"
+                className="relative p-6 rounded-xl border border-parchment-dark hover:border-gold/50 transition-all duration-300 hover:shadow-lg overflow-hidden"
               >
-                <div className="w-12 h-12 rounded-lg bg-sage/20 flex items-center justify-center mb-4">
-                  <Icon className="w-6 h-6 text-sage" />
+                <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-gold/35 to-transparent" />
+                <div className="flex items-start justify-between mb-4">
+                  <div className="w-12 h-12 rounded-lg bg-sage/20 flex items-center justify-center border border-sage/15">
+                    <Icon className="w-6 h-6 text-sage" />
+                  </div>
+                  <span className="font-serif text-xs text-stone/45 tracking-widest pt-1">
+                    {["I", "II", "III", "IV"][i]}
+                  </span>
                 </div>
-                <h3 className="font-serif text-lg text-ink mb-2">{title}</h3>
-                <p className="text-sm text-ink-muted">{desc}</p>
+                <h3 className="font-serif text-lg text-ink mb-1">{title}</h3>
+                <div className="h-px bg-gradient-to-r from-gold/25 to-transparent mb-2" />
+                <p className="text-sm text-ink-muted italic font-[var(--font-fell)] leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
@@ -46,27 +78,21 @@ export default function Home() {
       <section id="roadmap" className="bg-parchment-dark">
         <div className="max-w-4xl mx-auto px-4 py-8">
           <div className="text-center mb-8">
+            <p className="text-[9px] font-serif text-stone/60 uppercase tracking-[0.4em] mb-2">
+              — Chronicle of the Realm —
+            </p>
             <h2 className="font-serif text-2xl md:text-3xl text-ink mb-2">
-              {"The Wanderer's Guide"}
+              {"The Wanderer's Chronicle"}
             </h2>
             <p className="text-ink-muted italic font-[var(--font-fell)] text-sm md:text-base">
-              F2P Strategy from Early to End Game
+              From the first step to the final horizon — the path of the wanderer.
             </p>
-          </div>
-          <div className="flex items-start gap-3 p-4 bg-sage-pale/50 border border-sage-light rounded-lg mb-6">
-            <Sparkles className="w-5 h-5 text-sage flex-shrink-0 mt-0.5" />
-            <div>
-              <p className="text-sm text-ink-soft font-medium">Tap any phase to expand</p>
-              <p className="text-xs text-ink-muted mt-1">
-                View formation details, deploy timing, and strategic tips
-              </p>
-            </div>
           </div>
           <Divider />
         </div>
 
         <div className="max-w-4xl mx-auto px-4 pb-12">
-          <RoadmapAccordion />
+          <RoadmapSection />
         </div>
       </section>
 
@@ -74,17 +100,31 @@ export default function Home() {
       <section className="py-20 px-4 bg-deep-forest">
         <div className="max-w-4xl mx-auto text-center">
           <Sparkles className="w-12 h-12 text-gold mx-auto mb-6" />
+
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="h-px w-20 bg-gold/30" />
+            <span className="text-gold/60 text-sm">✦</span>
+            <div className="h-px w-20 bg-gold/30" />
+          </div>
+
           <h2 className="font-serif text-3xl md:text-4xl text-parchment mb-4">
-            Ready to Begin Your Journey?
+            The Realm Awaits Your Arrival
           </h2>
-          <p className="text-sage-light mb-8 max-w-xl mx-auto">
-            Master setiap phase, optimize formasi, dan jadilah pemain terbaik di Rellion: NPC Survival.
+          <p className="text-sage-light mb-6 max-w-xl mx-auto italic font-[var(--font-fell)]">
+            The path is long, the enemies many — but those who study the ancient knowledge shall prevail.
           </p>
+
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <div className="h-px w-20 bg-gold/20" />
+            <span className="text-gold/40 text-sm">✦</span>
+            <div className="h-px w-20 bg-gold/20" />
+          </div>
+
           <Link
             href="/roster"
             className="inline-flex items-center gap-2 px-8 py-3 bg-gold hover:bg-gold/90 text-ink font-serif rounded-md transition-colors"
           >
-            Start Your Adventure <ChevronRight className="w-4 h-4" />
+            Begin Your Quest <ChevronRight className="w-4 h-4" />
           </Link>
         </div>
       </section>
@@ -94,12 +134,12 @@ export default function Home() {
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-gold" />
-            <span className="font-serif text-parchment">Rellion Guide</span>
+            <span className="font-serif text-parchment">Rellion Wiki</span>
           </div>
-          <p className="text-sm text-stone-light text-center">
-            Fan-made guide dengan Frieren-inspired aesthetic. Game by DAERI SOFT.
+          <p className="text-sm text-stone-light text-center italic font-[var(--font-fell)]">
+            A chronicle forged by a wanderer, for wanderers. Game by DAERI SOFT.
           </p>
-          <p className="text-xs text-stone">Made with ✦ for F2P players</p>
+          <p className="text-xs text-stone font-serif tracking-wider">✦ FREE TO PLAY ✦</p>
         </div>
       </footer>
     </main>

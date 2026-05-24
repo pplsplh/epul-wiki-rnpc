@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Cinzel, Crimson_Pro, IM_Fell_English } from 'next/font/google'
+import { Cinzel, Cinzel_Decorative, Crimson_Pro, IM_Fell_English, Orbitron } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { Nav } from '@/components/Nav'
 import { ScrollReset } from '@/components/ScrollReset'
@@ -17,10 +17,23 @@ const crimsonPro = Crimson_Pro({
   display: 'swap',
 })
 
-const imFellEnglish = IM_Fell_English({ 
+const imFellEnglish = IM_Fell_English({
   weight: '400',
   subsets: ['latin'],
   variable: '--font-fell',
+  display: 'swap',
+})
+
+const cinzelDecorative = Cinzel_Decorative({
+  weight: ['400', '700'],
+  subsets: ['latin'],
+  variable: '--font-cinzel-decorative',
+  display: 'swap',
+})
+
+const orbitron = Orbitron({
+  subsets: ['latin'],
+  variable: '--font-orbitron',
   display: 'swap',
 })
 
@@ -35,7 +48,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${cinzel.variable} ${crimsonPro.variable} ${imFellEnglish.variable} bg-parchment`}>
+    <html lang="en" className={`${cinzel.variable} ${crimsonPro.variable} ${imFellEnglish.variable} ${cinzelDecorative.variable} ${orbitron.variable} bg-parchment`}>
       <body className="font-sans antialiased text-ink">
         {/* Magic particles — fixed, muncul di semua halaman */}
         <div className="magic-particle" style={{ top: '15%', left: '10%' }} />

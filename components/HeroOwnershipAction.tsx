@@ -9,8 +9,6 @@ export function HeroOwnershipAction({ heroId }: { heroId: string }) {
   const owned  = isOwned(heroId);
   const isBase = BASE_OWNED.has(heroId);
 
-  if (isBase) return null;
-
   if (owned) return null;
 
   return (
