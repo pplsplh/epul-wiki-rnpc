@@ -235,7 +235,7 @@ export function FormationBuilder({ slots, onSlotsChange }: FormationBuilderProps
           {availableHeroes.length === 0 ? (
             <p className="text-sm text-ink-muted italic text-center py-2">Semua hero sudah ditempatkan.</p>
           ) : (
-            <div className="grid grid-cols-5 gap-2">
+            <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
               {availableHeroes.map((hero) => (
                 <button
                   key={hero.id}
